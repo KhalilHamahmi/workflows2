@@ -1,8 +1,8 @@
-name: Deployment for Vue application
+name: Deploy Vite Vue App to GitHub Pages
 
 on:
   push:
-    branches: [main]   # Workflow startet nur bei Push auf "main"
+    branches: [main]
 
 permissions:
   contents: read
@@ -12,12 +12,9 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Checkout code
+      - name: Checkout repo
         uses: actions/checkout@v5
 
       - name: Setup Node.js
@@ -34,9 +31,3 @@ jobs:
 
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist   # Vue-Build-Ordner
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
